@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,11 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
-// });
+// }); 
 
-
+Route::get('/', [LayoutController::class, 'index'])->middleware('auth');
 Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::get('beranda', [BerandaController::class, 'index'])->name('beranda');
+Route::get('beranda', [BerandaController::class, 'index'])->middleware('auth');
 
 Route::controller(LoginController::class)->group(function () {
     route::get('login', 'index')->name('login');

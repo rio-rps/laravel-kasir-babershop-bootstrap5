@@ -16,7 +16,7 @@ class LoginController extends Controller
             // } elseif ($user->level == '2') {
             //     return redirect()->intended('kasir');
             // }
-            return redirect()->intended('beranda');
+            return redirect()->intended('/');
         }
 
         return view('login.view_login');
@@ -45,7 +45,7 @@ class LoginController extends Controller
             //     return redirect()->intended('kasir');
             // }
             if ($user) {
-                return redirect()->intended('beranda');
+                return redirect()->intended('/');
             }
         }
 
