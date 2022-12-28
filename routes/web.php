@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+Route::get('login', [LoginController::class, 'index'])->name('login');
+Route::get('beranda', [BerandaController::class, 'index'])->name('beranda');
+
+Route::controller(LoginController::class)->group(function () {
+    route::get('login', 'index')->name('login');
+    Route::post('login/proses', 'proses');
+    Route::get('logout', 'logout');
+});
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['cekUserLogin:1']], function () {
+        //Route::resource('beranda', Beranda::class);
+        // Route::resource('satuan', SatuanController::class);
+        // Route::resource('kategori', KategoriController::class);
+        // Route::resource('produk', ProdukController::class);
+        // Route::resource('penjualan', PenjualanController::class);
+        // Route::resource('pembelian', PembelianController::class);
+        // Route::resource('laporan', LaporanController::class);
+    });
+
+    Route::group(['middleware' => ['cekUserLogin:2']], function () {
+        //Route::resource('kasir', Kasir::class);
+        // Route::resource('penjualan', PenjualanController::class);
+        // Route::resource('kategori', PenjualanController::class);
+    });
+
+    Route::group(['middleware' => ['cekUserLogin:3']], function () {
+        //Route::resource('kasir', Kasir::class);
+        //Route::resource('pembelian', PembelianController::class);
+    });
+
+    Route::group(['middleware' => ['cekUserLogin:4']], function () {
+        //Route::resource('kasir', Kasir::class);
+        //Route::resource('laporan', LaporanController::class);
+    });
+
+    Route::group(['middleware' => ['cekUserLogin:5']], function () {
+        //Route::resource('kasir', Kasir::class);
+        //Route::resource('laporan', LaporanController::class);
+    });
 });
