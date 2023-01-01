@@ -10,7 +10,7 @@ class BerandaController extends Controller
     public function index()
     {
         return view('layout.beranda')->with([
-            'user' => Auth::user(),
+            // 'user' => Auth::user(),
         ]);
     }
 }

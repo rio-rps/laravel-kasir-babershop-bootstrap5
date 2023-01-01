@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SatuanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // }); 
 
+
+
 Route::get('/', [LayoutController::class, 'index'])->middleware('auth');
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::get('beranda', [BerandaController::class, 'index'])->middleware('auth');
@@ -33,13 +37,13 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['cekUserLogin:1']], function () {
-        //Route::resource('beranda', Beranda::class);
-        // Route::resource('satuan', SatuanController::class);
-        // Route::resource('kategori', KategoriController::class);
-        // Route::resource('produk', ProdukController::class);
-        // Route::resource('penjualan', PenjualanController::class);
-        // Route::resource('pembelian', PembelianController::class);
-        // Route::resource('laporan', LaporanController::class);
+        Route::resource('satuan', SatuanController::class);
+        Route::resource('kategori', KategoriController::class);
+        Route::resource('satuan/store', SatuanController::class); // save
+        // Route::resource('/satuan/formadd', SatuanController::class);
+        // Route::get('satuan/formadd', [SatuanController::class, 'formadd'])->name('formadd');
+        // Route::get('satuan/formadd', 'formadd');
+        // Route::resource('formadd', SatuanController::class);
     });
 
     Route::group(['middleware' => ['cekUserLogin:2']], function () {

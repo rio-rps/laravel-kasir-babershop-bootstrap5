@@ -36,7 +36,7 @@
                                         <div class="main-img-user"><img alt="" src="{{ asset('/') }}img/faces/6.jpg" class="">
                                         </div>
                                         <div class="ms-3 my-auto">
-                                            <h6>{{ $user->name }}</h6><span>Premium Member</span>
+                                            <h6>{{ Auth::user()->name }}</h6><span>Premium Member</span>
                                         </div>
                                     </div>
                                 </div>
@@ -49,6 +49,7 @@
                                     Sign Out</a>
                             </div>
                         </li>
+
                     </ul>
                 </div>
             </div>

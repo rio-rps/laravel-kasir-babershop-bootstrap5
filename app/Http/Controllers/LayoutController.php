@@ -11,7 +11,7 @@ class LayoutController extends Controller
     {
         //return view('layout.main');
         return view('layout.beranda')->with([
-            'user' => Auth::user(),
+            //'user' => Auth::user(),
         ]);
     }
 }

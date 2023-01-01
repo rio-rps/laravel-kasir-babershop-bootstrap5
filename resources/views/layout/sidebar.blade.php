@@ -15,7 +15,7 @@
                         <img alt="user-img" class="avatar avatar-xl brround" src="{{ asset('/') }}img/faces/6.jpg"><span class="avatar-status profile-status bg-green"></span>
                     </div>
                     <div class="user-info">
-                        <h4 class="fw-semibold mt-3 mb-0">{{ $user->name }}</h4>
+                        <h4 class="fw-semibold mt-3 mb-0">{{ Auth::user()->name }}</h4>
                         <span class="mb-0 text-muted">Premium Member</span>
                     </div>
                 </div>
@@ -47,8 +47,9 @@
                         <!-- <span class="badge bg-success text-light" id="bg-side-text">1</span> -->
                     </a>
                 </li>
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+
+                <li class="slide {{ request()->segment(1)=='satuan' || request()->segment(1)=='kategori'?'is-expanded':'' }}">
+                    <a class=" side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0V0z" fill="none"></path>
                             <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
@@ -57,13 +58,46 @@
                         <span class="side-menu__label">Data Master</span><i class="angle fe fe-chevron-down"></i></a>
                     <ul class="slide-menu">
                         <li class="side-menu__label1"><a href="javascript:void(0);"></a></li>
-                        <li><a class="slide-item" href="{{url('kategori')}}">Kategori</a></li>
-                        <li><a class="slide-item" href="{{url('sayuan')}}">Satuan</a></li>
+                        <li><a class="slide-item  {{ request()->segment(1)=='satuan' ? 'active':'' }}" href="{{url('satuan')}}">Satuan</a></li>
+                        <li><a class="slide-item {{ request()->segment(1)=='kategori' ? 'active':'' }}" href="{{url('kategori')}}">Kategori</a></li>
                         <li><a class="slide-item" href="{{url('layanan')}}">Layanan</a></li>
                         <li><a class="slide-item" href="{{url('product')}}">Product</a></li>
                     </ul>
                 </li>
                 <li class="side-item side-item-category">Transaksi</li>
+                <li class="slide">
+                    <a class="side-menu__item" href="index.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
+                            <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"></path>
+                        </svg>
+                        <span class="side-menu__label">Penjualan</span>
+                        <!-- <span class="badge bg-success text-light" id="bg-side-text">1</span> -->
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item" href="index.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
+                            <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"></path>
+                        </svg>
+                        <span class="side-menu__label">Penjualan</span>
+                        <!-- <span class="badge bg-success text-light" id="bg-side-text">1</span> -->
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item" href="index.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
+                            <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"></path>
+                        </svg>
+                        <span class="side-menu__label">Penjualan</span>
+                        <!-- <span class="badge bg-success text-light" id="bg-side-text">1</span> -->
+                    </a>
+                </li>
                 <li class="slide">
                     <a class="side-menu__item" href="index.html">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
