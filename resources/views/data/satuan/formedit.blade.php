@@ -1,39 +1,28 @@
 <link rel="stylesheet" href="{{ asset('/') }}plugins/sweetalert2/sweetalert2.min.css">
 <script src="{{ asset('/') }}plugins/sweetalert2/sweetalert2.all.min.js"></script>
-
-<!-- Sidebar-right-->
 <style>
     .swal2-container {
         z-index: 10000;
     }
 </style>
+<!-- Sidebar-right-->
 <div class="sidebar sidebar-right sidebar-animate" style="width: 25em;">
     <div class="panel panel-primary card mb-0 box-shadow">
         <div class="tab-menu-heading border-0 p-3">
-            <div class="card-title mb-0">FORM INPUT DATA BARU</div>
+            <div class="card-title mb-0">FORM EDIT DATA</div>
             <div class="card-options ms-auto">
                 <a href="javascript:void(0);" class="sidebar-remove"><i class="fa fa-window-close"></i></a>
             </div>
         </div>
         <div class="panel-body tabs-menu-body latest-tasks p-0 border-0 p-3">
-            <!-- @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif -->
-
-            <form action="{{ route('satuan.store') }}" class="formSimpan" method="POST">
+            <form action="{{ route('satuan.update',$id_satuan) }}" class="formUpdate" method="POST">
                 @csrf
                 <div class="form-group">
                     <label>Nama Satuan</label>
-                    <input class="form-control" placeholder="Nama Satuan" type="text" name="nm_satuan">
+                    <input class="form-control" placeholder="Nama Satuan" type="text" name="nm_satuan" value="{{ $nm_satuan }}">
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block mt-3 mb-0" id="tombolSimpan">SIMPAN</button>
+                <button type=" submit" class="btn btn-primary btn-block mt-3 mb-0" id="tombolUpdate">SIMPAN</button>
             </form>
         </div>
     </div>
@@ -46,20 +35,20 @@
     });
 
     $(document).ready(function() {
-        $('.formSimpan').submit(function(e) {
+        $('.formUpdate').submit(function(e) {
             e.preventDefault();
             $.ajax({
-                type: "POST",
+                type: "PUT",
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
                 dataType: "json",
                 beforeSend: function() {
-                    $('#tombolSimpan').prop('disabled', true);
-                    $('#tombolSimpan').html("<i class='fa fa-spin fa-spinner'></i>");
+                    $('#tombolUpdate').prop('disabled', true);
+                    $('#tombolUpdate').html("<i class='fa fa-spin fa-spinner'></i>");
                 },
                 complete: function() {
-                    $('#tombolSimpan').prop('disabled', false);
-                    $('#tombolSimpan').html("Simpan");
+                    $('#tombolUpdate').prop('disabled', false);
+                    $('#tombolUpdate').html("Simpan");
 
                 },
                 success: function(response) {
@@ -73,7 +62,6 @@
 
                 },
                 error: function(xhr, ajaxOptons, throwError) {
-
                     if (xhr.status >= 500) {
                         // alert(xhr.status + '\n' + throwError);
                         Swal.fire('Error', xhr.status + '\n' + throwError, 'error');

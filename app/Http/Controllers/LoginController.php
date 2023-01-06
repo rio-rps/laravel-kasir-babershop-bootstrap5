@@ -9,6 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
+        //echo bcrypt('123456');
         if (Auth::user()) {
             $user = Auth::user();
             // if ($user->level == '1') {

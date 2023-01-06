@@ -9,5 +9,6 @@ class SatuanModel extends Model
 {
     use HasFactory;
     public $table = "cpar_001_satuan";
+    protected $primarykey = "id_satuan";
     protected $fillable = ['nm_satuan'];
 }

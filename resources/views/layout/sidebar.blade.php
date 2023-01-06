@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="side-item side-item-category">Master</li>
-                <li class="slide">
+                <!-- <li class="slide">
                     <a class="side-menu__item" href="index.html">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0V0z" fill="none"></path>
@@ -44,26 +44,40 @@
                             <path d="M12 22c5.52 0 10-4.48 10-10 0-4.75-3.31-8.72-7.75-9.74l-.08-.04-.01.02C13.46 2.09 12.74 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10zm0-2c-.38 0-.74-.04-1.1-.09L14.89 13l2.72 4.7C16.16 19.12 14.18 20 12 20zm8-8c0 1.85-.64 3.55-1.7 4.91l-4-6.91h5.43c.17.64.27 1.31.27 2zm-.59-3h-7.99l2.71-4.7c2.4.66 4.35 2.42 5.28 4.7zM12 4c.37 0 .74.03 1.1.08L10.27 9l-1.15 2L6.4 6.3C7.84 4.88 9.82 4 12 4zm-8 8c0-1.85.64-3.55 1.7-4.91L8.54 12l1.15 2H4.26C4.1 13.36 4 12.69 4 12zm6.27 3h2.3l-2.71 4.7c-2.4-.67-4.35-2.42-5.28-4.7h5.69z"></path>
                         </svg>
                         <span class="side-menu__label">Pengaturan Aplikasi</span>
-                        <!-- <span class="badge bg-success text-light" id="bg-side-text">1</span> -->
+                         <span class="badge bg-success text-light" id="bg-side-text">1</span>  
                     </a>
-                </li>
+                </li> -->
 
-                <li class="slide {{ request()->segment(1)=='satuan' || request()->segment(1)=='kategori'?'is-expanded':'' }}">
+                <li class="slide {{ request()->segment(1)=='satuan' || request()->segment(1)=='potongan'?'is-expanded':'' }}">
                     <a class=" side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0V0z" fill="none"></path>
                             <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
                             <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"></path>
                         </svg>
-                        <span class="side-menu__label">Data Master</span><i class="angle fe fe-chevron-down"></i></a>
+                        <span class="side-menu__label">Data Parameter</span><i class="angle fe fe-chevron-down"></i></a>
                     <ul class="slide-menu">
                         <li class="side-menu__label1"><a href="javascript:void(0);"></a></li>
                         <li><a class="slide-item  {{ request()->segment(1)=='satuan' ? 'active':'' }}" href="{{url('satuan')}}">Satuan</a></li>
-                        <li><a class="slide-item {{ request()->segment(1)=='kategori' ? 'active':'' }}" href="{{url('kategori')}}">Kategori</a></li>
-                        <li><a class="slide-item" href="{{url('layanan')}}">Layanan</a></li>
-                        <li><a class="slide-item" href="{{url('product')}}">Product</a></li>
+                        <li><a class="slide-item  {{ request()->segment(1)=='potongan' ? 'active':'' }}" href="{{url('potongan')}}">Akun Potongan</a></li>
                     </ul>
                 </li>
+
+                <li class="slide {{ request()->segment(1)=='barangjasa'?'is-expanded':'' }}">
+                    <a class=" side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M13 4H6v16h12V9h-5V4zm3 14H8v-2h8v2zm0-6v2H8v-2h8z" opacity=".3"></path>
+                            <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"></path>
+                        </svg>
+                        <span class="side-menu__label">Data Barang Jasa</span><i class="angle fe fe-chevron-down"></i></a>
+                    <ul class="slide-menu">
+                        <li class="side-menu__label1"><a href="javascript:void(0);"></a></li>
+                        <li><a class="slide-item {{ request()->segment(1)=='barangjasa?kat=1' ? 'active':'' }}" href="{{route('barangjasa.index', ['kat' => 1])}}">Layanan</a></li>
+                        <li><a class="slide-item {{ request()->segment(1)=='barangjasa?kat=2' ? 'active':'' }}" href="{{route('barangjasa.index', ['kat' => '2'])}}">Product</a></li>
+                    </ul>
+                </li>
+
                 <li class="side-item side-item-category">Transaksi</li>
                 <li class="slide">
                     <a class="side-menu__item" href="index.html">

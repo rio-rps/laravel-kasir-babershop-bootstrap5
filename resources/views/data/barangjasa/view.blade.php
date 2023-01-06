@@ -30,23 +30,45 @@
              </div>
              <div class="card-body">
                  <div class="table-responsive">
-                     <table id="example2" class="border-top-0  table table-bordered text-nowrap border-bottom">
+                     <table id="example2" class="border-top-0  table table-bordered text-nowrap border-bottom" style="font-size:10px;">
                          <thead>
                              <tr>
                                  <th width="1%">No</th>
-                                 <th>Nama Satuan</th>
+                                 <th>Nama</th>
+                                 @if ($status_layanan==2)
+                                 <th>Stok dijual</th>
+                                 @endif
+                                 <th>Harga Beli/Modal</th>
+                                 <th>Harga Jual</th>
+                                 <th>Diskon</th>
+                                 <th>Harga Jual Real</th>
+                                 <th>Keterangan</th>
+                                 <th>Status</th>
                                  <th width="5%" align="center">Action</th>
                              </tr>
                          </thead>
                          <tbody>
-                             @foreach ($result as $row)
+                             @foreach ($barangjasa as $bj)
                              <tr>
                                  <td>{{ $loop->index + 1 }}</td>
-                                 <td>{{ $row->nm_satuan }}</td>
+                                 <td>{{ $bj->nm_brgjasa }}</td>
+                                 @if ($status_layanan ==2)
+                                 <td align="center">{{ $bj->stok }} {{ $bj->nm_satuan }}</td>
+                                 @endif
+                                 <td align="right">Rp. {{ format_rupiah($bj->harga_beli) }}</td>
+                                 <td align="right">Rp. {{ format_rupiah($bj->harga_jual) }}</td>
+                                 <td align="right">Rp. {{ format_rupiah($bj->diskon) }}</td>
+                                 <td align="right">Rp. {{ format_rupiah($bj->harga_jual_real) }}</td>
+                                 <td>{{ $bj->ket_brgjasa }}</td>
+                                 <td>{{ status_brgjasa($bj->status_tersedia) }}</td>
                                  <td>
                                      <div class="btn-icon-list btn-list">
-                                         <button type="button" class="btn btn-sm btn-success" onclick="editData('{{$row->id_satuan}}')" title="Edit Data"><i class="fa fa-edit"></i></button>
-                                         <button type="button" class="btn btn-sm btn-danger" onclick="hapusData('{{$row->id_satuan}}')" title="Hapus Data"><i class="fa fa-trash"></i></button>
+                                         <button type="button" class="btn btn-sm btn-warning" onclick="updateHarga('{{$bj->id_brgjasa}}')" title="Update Data Harga"><i class="far fa-closed-captioning"></i></button>
+                                         @if ($status_layanan==2)
+                                         <button type="button" class="btn btn-sm btn-primary" onclick="updateStokData('{{$bj->id_brgjasa}}')" title="Update Data Stok"><i class="fa fa-shopping-cart"></i></button>
+                                         @endif
+                                         <button type="button" class="btn btn-sm btn-success" onclick="editData('{{$bj->id_brgjasa}}')" title="Edit Data"><i class="fa fa-edit"></i></button>
+                                         <button type="button" class="btn btn-sm btn-danger" onclick="hapusData('{{$bj->id_brgjasa}}')" title="Hapus Data"><i class="fa fa-trash"></i></button>
 
                                          <!-- <form action="{{url('satuan/destroy')}}" method="post" style="display: inline;" onsubmit="return hapusData()">
                                              @method('delete')
@@ -70,16 +92,16 @@
      document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
 
      function showSidebarRight() {
-         //var ket = "test";
+         var id_kategori = <?= $id_kategori; ?>;
          $.ajax({
              type: "GET",
-             url: "{{ url('satuan/create') }}",
+             url: "{{ url('barangjasa/create') }}",
              headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
              },
-             // data: {
-             //     ket: ket,
-             // },
+             data: {
+                 id_kategori: id_kategori
+             },
              //dataType: "json",
              success: function(response) {
                  $('.viewmodal').html(response).show();
@@ -93,11 +115,30 @@
 
      }
 
-
-     function editData(id_satuan) {
+     function updateHarga(id_brgjasa) {
          $.ajax({
              type: "GET",
-             url: "{{ url('satuan') }}" + '/' + id_satuan + '/edit',
+             url: "{{ route('harga.formedit') }}",
+             data: {
+                 id_brgjasa: id_brgjasa,
+             },
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
+             success: function(response) {
+                 $('.viewmodal').html(response).show();
+                 document.querySelector('.sidebar-right').classList.toggle('sidebar-open');
+             },
+             error: function(xhr, ajaxOptons, throwError) {
+                 alert(xhr.status + '\n' + throwError);
+             }
+         });
+     }
+
+     function editData(id_brgjasa) {
+         $.ajax({
+             type: "GET",
+             url: "{{ url('barangjasa') }}" + '/' + id_brgjasa + '/edit',
              //dataType: "json",
              headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,7 +153,7 @@
          });
      }
 
-     function hapusData(id_satuan) {
+     function hapusData(id_brgjasa) {
 
          Swal.fire({
              title: 'Apakah Anda Yakin ',
@@ -126,9 +167,9 @@
              if (result.isConfirmed) {
                  $.ajax({
                      type: "DELETE",
-                     url: "{{ url('satuan/destroy') }}",
+                     url: "{{ url('barangjasa/destroy') }}",
                      data: {
-                         id_satuan: id_satuan,
+                         id_brgjasa: id_brgjasa,
                          // _token: '{{ csrf_token() }}'
                      },
                      headers: {
@@ -155,14 +196,6 @@
              }
          })
 
-
-
-         //  pesan = confirm('Yakin data ini dihapus ?');
-
-         //  if (pesan)
-         //      return true;
-         //  else
-         //      return false;
      }
  </script>
 

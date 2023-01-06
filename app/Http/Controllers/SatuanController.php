@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SatuanModel;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 
 class SatuanController extends Controller
 {
@@ -14,7 +17,8 @@ class SatuanController extends Controller
     {
 
         $data = [
-            //'user' => Auth::user(),
+            'title' => 'SATUAN',
+            'result' => SatuanModel::all(),
         ];
         return view('data/satuan/view')->with($data);
     }
@@ -31,30 +35,75 @@ class SatuanController extends Controller
     public function store(Request $r)
     {
         if (request()->ajax()) {
-
-            SatuanModel::create([
-                'nm_satuan' => $r->nm_satuan,
+            $validator = Validator::make($r->all(), [
+                'nm_satuan' => 'required|max:225',
+            ], [
+                'nm_satuan.required' => 'Nama Satuan Tidak Boleh Kosong',
+                'nm_satuan.max' => 'Nama Satuan Maksimal 225 Karakter',
             ]);
 
-
-            $json = [
-                'success' => "Data berhasil disimpan",
-            ];
-
-            echo json_encode($json);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                return response()->json(['errors' => $errors], 422);
+            } else {
+                $post = SatuanModel::create([
+                    'nm_satuan'     => $r->nm_satuan,
+                ]);
+                return response()->json(['success' => 'Data berhasil disimpan']);
+            }
         } else {
             exit('Maaf Tidak Dapat diproses...');
         }
     }
 
+    public function destroy(Request $r)
+    {
+        if (request()->ajax()) {
+            //   return $r->id;
+            //$dt = SatuanModel::find($r->id);
+            //echo $dt->nm_satuan;
 
-    // public function formadd()
-    // {
-    //     echo "aaaaaaaaaaa";
-    // }
 
-    // public function show(SatuanModel $satuanModel)
-    // {
-    //     return "showw";
-    // }
+            SatuanModel::where('id_satuan', $r->id_satuan)->delete();
+            return response()->json([
+                'success' => 'Data berhasil dihapus',
+            ]);
+        } else {
+            exit('Maaf Tidak Dapat diproses...');
+        }
+    }
+
+    public function edit($id_satuan)
+    {
+        if (request()->ajax()) {
+            $dt = SatuanModel::where('id_satuan', $id_satuan)->first();
+            $data = [
+                'id_satuan' => $id_satuan,
+                'nm_satuan' => $dt->nm_satuan,
+            ];
+            return view('data.satuan.formedit', $data);
+        } else {
+            exit('Maaf, request tidak dapat diproses');
+        }
+    }
+
+    public function update(Request $r, $id_satuan)
+    {
+        $validator = Validator::make($r->all(), [
+            'nm_satuan' => 'required|max:225',
+        ], [
+            'nm_satuan.required' => 'Nama Satuan Tidak Boleh Kosong',
+            'nm_satuan.max' => 'Nama Satuan Maksimal 225 Karakter',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['errors' => $errors], 422);
+        } else {
+            SatuanModel::where('id_satuan', $id_satuan)->update([
+                'nm_satuan' => $r->nm_satuan,
+            ]);
+            return response()->json(['success' => 'Data berhasil diupdate']);
+        }
+    }
 }

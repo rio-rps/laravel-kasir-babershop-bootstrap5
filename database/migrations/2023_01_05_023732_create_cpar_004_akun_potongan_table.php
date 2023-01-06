@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cpar_003_product', function (Blueprint $table) {
+        Schema::create('cpar_004_akun_potongan', function (Blueprint $table) {
             $table->id();
-            $table->string('nm_product');
-            $table->foreignId('id_kategori')->constrained('cpar_002_kategori');
-            $table->integer('stok');
-            $table->text('deskripsi');
-            $table->enum('status_tersedia', ['1', '2'])->comment('1 = tampil / barang tersedia, 2 = tidak tersedia');
+            $table->string('nm_pot');
+            $table->text('ket_pot');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cpar_003_product');
+        Schema::dropIfExists('cpar_004_akun_potongan');
     }
 };
