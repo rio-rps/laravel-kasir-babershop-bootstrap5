@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PotonganModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PotonganController extends Controller
 {
@@ -13,7 +15,12 @@ class PotonganController extends Controller
      */
     public function index()
     {
-        //
+
+        $data = [
+            'title' => 'POTONGAN',
+            'result' => PotonganModel::all(),
+        ];
+        return view('data/potongan/view')->with($data);
     }
 
     /**
@@ -23,7 +30,11 @@ class PotonganController extends Controller
      */
     public function create()
     {
-        //
+        if (request()->ajax()) {
+            return view('data.potongan.formadd');
+        } else {
+            exit('Maaf Tidak Dapat diproses...');
+        }
     }
 
     /**
@@ -32,9 +43,31 @@ class PotonganController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        if (request()->ajax()) {
+            $validator = Validator::make($r->all(), [
+                'nm_pot' => 'required|max:225',
+                'ket_pot' => 'required',
+            ], [
+                'nm_pot.required' => 'Nama Potongan Tidak Boleh Kosong',
+                'nm_pot.max' => 'Nama Potongan Maksimal 225 Karakter',
+                'ket_pot.required' => 'Keterangan Potongan Tidak Boleh Kosong',
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                return response()->json(['errors' => $errors], 422);
+            } else {
+                $post = PotonganModel::create([
+                    'nm_pot'     => $r->nm_pot,
+                    'ket_pot'     => $r->ket_pot,
+                ]);
+                return response()->json(['success' => 'Data berhasil disimpan']);
+            }
+        } else {
+            exit('Maaf Tidak Dapat diproses...');
+        }
     }
 
     /**
@@ -56,7 +89,16 @@ class PotonganController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (request()->ajax()) {
+            $row = PotonganModel::where('id_pot', $id)->first();
+            $data = [
+                'id'  => $id,
+                'row' => $row,
+            ];
+            return view('data.potongan.formedit', $data);
+        } else {
+            exit('Maaf, request tidak dapat diproses');
+        }
     }
 
     /**
@@ -66,9 +108,26 @@ class PotonganController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $r, $id)
     {
-        //
+        $validator = Validator::make($r->all(), [
+            'nm_pot' => 'required|max:225',
+            'ket_pot' => 'required',
+        ], [
+            'nm_pot.required' => 'Nama Potongan Tidak Boleh Kosong',
+            'nm_pot.max' => 'Nama Potongan Maksimal 225 Karakter',
+            'ket_pot.required' => 'Keterangan Potongan Tidak Boleh Kosong',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['errors' => $errors], 422);
+        } else {
+            PotonganModel::where('id_pot', $id)->update([
+                'nm_pot' => $r->nm_pot,
+                'ket_pot' => $r->ket_pot,
+            ]);
+            return response()->json(['success' => 'Data berhasil diupdate']);
+        }
     }
 
     /**
@@ -77,8 +136,15 @@ class PotonganController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $r)
     {
-        //
+        if (request()->ajax()) {
+            PotonganModel::where('id_pot', $r->id)->delete();
+            return response()->json([
+                'success' => 'Data berhasil dihapus',
+            ]);
+        } else {
+            exit('Maaf Tidak Dapat diproses...');
+        }
     }
 }

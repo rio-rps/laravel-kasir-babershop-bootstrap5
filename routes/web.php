@@ -3,9 +3,9 @@
 use App\Http\Controllers\BarangJasaController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\HargaController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PotonganController;
 use App\Http\Controllers\SatuanController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::get('harga/formedit', [HargaController::class, 'formedit'])->name('harga.formedit');
         Route::put('harga/update/{id}', [HargaController::class, 'update'])->name('harga.update');
+
+        Route::resource('potongan', PotonganController::class);
         //Route::resource('harga', SatuanController::class);
         // Route::resource('barangjasa.create', BarangJasaController::class)->parameters([
         //     'kategori' => 'kategori',
