@@ -29,6 +29,7 @@ class BarangJasaController extends Controller
             ->get();
         $data = [
             'title' => 'KATEGORI ' . Str::upper($kategori->nm_kategori),
+            'sub_title' => ($kategori->status_layanan == 1) ? 'Note : Tidak Menggunakan Stok Barang' : 'Note : Menggunakan Stok Barang',
             'barangjasa'  => $barangjasa,
             'id_kategori' => $id_kategori,
             'status_layanan' => $kategori->status_layanan,

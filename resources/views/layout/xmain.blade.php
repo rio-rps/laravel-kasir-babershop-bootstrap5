@@ -81,9 +81,33 @@
 
     <!--Internal  jquery.maskedinput js -->
     <script src="{{asset('/')}}plugins/jquery.maskedinput/jquery.maskedinput.js"></script>
+    <!-- <script src="{{asset('/')}}/js/form-elements.js"></script> -->
 
+    <!--Internal  Chart.bundle js -->
+    <!-- <script src="{{ asset('/') }}plugins/chart.js/Chart.bundle.min.js"></script> -->
+
+    <!-- Moment js -->
+    <!-- <script src="{{ asset('/') }}plugins/moment/moment.js"></script> -->
+
+    <!--Internal Sparkline js -->
+    <!-- <script src="{{ asset('/') }}plugins/jquery-sparkline/jquery.sparkline.min.js"></script> -->
+
+    <!-- Moment js -->
+    <!-- <script src="{{ asset('/') }}plugins/raphael/raphael.min.js"></script> -->
+
+    <!--Internal Apexchart js-->
+    <!-- <script src="{{ asset('/') }}js/apexcharts.js"></script> -->
+
+    <!-- Rating js-->
+    <!-- <script src="{{ asset('/') }}plugins/ratings-2/jquery.star-rating.js"></script>
+    <script src="{{ asset('/') }}plugins/ratings-2/star-rating.js"></script> -->
+
+    <!--Internal  Perfect-scrollbar js -->
     <script src="{{ asset('/') }}plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('/') }}plugins/perfect-scrollbar/p-scroll.js"></script>
+
+    <!-- Eva-icons js -->
+    <!-- <script src="{{ asset('/') }}js/eva-icons.min.js"></script> -->
 
     <!-- right-sidebar js -->
     <script src="{{ asset('/') }}plugins/sidebar/sidebar.js"></script>
@@ -91,13 +115,24 @@
 
     <!-- Sticky js -->
     <script src="{{ asset('/') }}js/sticky.js"></script>
+    <!-- <script src="{{ asset('/') }}js/modal-popup.js"></script> -->
 
     <!-- Left-menu js-->
     <script src="{{ asset('/') }}plugins/side-menu/sidemenu.js"></script>
 
+    <!-- Internal Map -->
+    <!-- <script src="{{ asset('/') }}plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="{{ asset('/') }}plugins/jqvmap/maps/jquery.vmap.usa.js"></script> -->
+
+    <!--Internal  index js -->
+    <!-- <script src="{{ asset('/') }}js/index.js"></script> -->
 
     <!--themecolor js-->
     <script src="{{ asset('/') }}js/themecolor.js"></script>
+
+    <!-- Apexchart js-->
+    <!-- <script src="{{ asset('/') }}js/apexcharts.js"></script>
+    <script src="{{ asset('/') }}js/jquery.vmap.sampledata.js"></script> -->
 
     <!-- custom js -->
     <script src="{{ asset('/') }}js/custom.js"></script>
@@ -110,6 +145,13 @@
 
     <!--Internal  Datatable js -->
     <script src="{{asset('/')}}js/table-data.js"></script>
+    <!--  
+    <script src="{{asset('/')}}plugins/sweet-alert/sweetalert.min.js"></script>
+    <script src="{{asset('/')}}plugins/sweet-alert/jquery.sweet-alert.js"></script>
+ 
+    <script src="{{asset('/')}}plugins/sweet-alert/sweetalert.min.js"></script>
+    <script src="{{asset('/')}}js/sweet-alert.js"></script> -->
+
 </body>
 
 </html>

@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{ asset('/') }}plugins/sweetalert2/sweetalert2.min.css">
-<script src="{{ asset('/') }}plugins/sweetalert2/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('/') }}css/customcss.css">
 <!-- Sidebar-right-->
 <style>
@@ -62,7 +60,7 @@
                     if (response.success) {
                         document.querySelector('.sidebar-right').classList.toggle('sidebar-open');
                         Swal.fire('Berhasil', response.success, 'success').then((result) => {
-                            window.location.reload();
+                            myTable.ajax.reload();
                         })
                     }
 

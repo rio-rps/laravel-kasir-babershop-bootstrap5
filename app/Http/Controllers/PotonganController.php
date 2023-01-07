@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\PotonganModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables as DataTablesDataTables;
+use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Services\DataTable;
 
 class PotonganController extends Controller
 {
@@ -18,10 +21,25 @@ class PotonganController extends Controller
 
         $data = [
             'title' => 'POTONGAN',
-            'result' => PotonganModel::all(),
+            //'result' => PotonganModel::all(),
         ];
         return view('data/potongan/view')->with($data);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function show()
+    {
+        return  DataTablesDataTables::of(PotonganModel::query())
+            ->addColumn('action', 'data.potongan.action')
+            ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -70,16 +88,7 @@ class PotonganController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

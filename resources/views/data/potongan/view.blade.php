@@ -30,7 +30,7 @@
              </div>
              <div class="card-body">
                  <div class="table-responsive">
-                     <table id="example2" class="border-top-0  table table-bordered text-nowrap border-bottom">
+                     <table id="myTable" class="border-top-0  table table-bordered text-nowrap border-bottom">
                          <thead>
                              <tr>
                                  <th width="1%">No</th>
@@ -39,28 +39,7 @@
                                  <th width="5%" align="center">Action</th>
                              </tr>
                          </thead>
-                         <tbody>
-                             @foreach ($result as $row)
-                             <tr>
-                                 <td>{{ $loop->index + 1 }}</td>
-                                 <td>{{ $row->nm_pot }}</td>
-                                 <td>{{ $row->ket_pot }}</td>
-                                 <td>
-                                     <div class="btn-icon-list btn-list">
-                                         <button type="button" class="btn btn-sm btn-success" onclick="editData('{{$row->id_pot}}')" title="Edit Data"><i class="fa fa-edit"></i></button>
-                                         <button type="button" class="btn btn-sm btn-danger" onclick="hapusData('{{$row->id_pot}}')" title="Hapus Data"><i class="fa fa-trash"></i></button>
-
-                                         <!-- <form action="{{url('satuan/destroy')}}" method="post" style="display: inline;" onsubmit="return hapusData()">
-                                             @method('delete')
-                                             @csrf
-                                             <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                             </form> -->
-
-                                     </div>
-                                 </td>
-                             </tr>
-                             @endforeach
-                         </tbody>
+                         <tbody></tbody>
                      </table>
                  </div>
              </div>
@@ -69,7 +48,42 @@
  </div>
  <div class="viewmodal" style="display:none;"></div>
  <script>
-     document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
+     document.addEventListener('DOMContentLoaded', function() {
+         document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
+
+         myTable = $('#myTable').DataTable({
+             processing: true,
+             serverSide: true,
+             ajax: "{{url('potongan/show')}}",
+             // "data": null,
+             // "class": "align-top",
+             // "orderable": false,
+             // "searchable": false,
+             columns: [{
+                     // "class": "align-top",
+                     "orderable": false,
+                     "searchable": false,
+                     "data": "no",
+                     "render": function(data, type, row, meta) {
+                         return meta.row + meta.settings._iDisplayStart + 1;
+                     }
+                 },
+                 {
+                     data: 'nm_pot',
+                     name: 'nm_pot'
+                 },
+                 {
+                     data: 'ket_pot',
+                     name: 'ket_pot'
+                 }, {
+                     data: 'action',
+                     name: 'action',
+                 }
+             ]
+         });
+     });
+
+
 
      function showSidebarRight() {
          //var ket = "test";
@@ -144,7 +158,7 @@
                                      'success'
                                  )
                                  .then((result) => {
-                                     window.location.reload();
+                                     myTable.ajax.reload();
                                  })
                          }
                      },
@@ -155,25 +169,10 @@
 
              }
          })
-
-
-
-         //  pesan = confirm('Yakin data ini dihapus ?');
-
-         //  if (pesan)
-         //      return true;
-         //  else
-         //      return false;
      }
- </script>
 
-
-
-
-
- <script>
      function refresh() {
-         window.location.href = "{{ url('satuan') }}";
+         myTable.ajax.reload();
      }
  </script>
  @endsection

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class SatuanController extends Controller
 {
@@ -16,11 +17,22 @@ class SatuanController extends Controller
     public function index()
     {
 
+        // return view('data/satuan/view')->with([
+        //     'results' => SatuanModel::get(),
+        // ]);
+        // $dt = DataTables::of(SatuanModel::query())->make(true);
         $data = [
             'title' => 'SATUAN',
-            'result' => SatuanModel::all(),
+            //'result' => $dt,
         ];
         return view('data/satuan/view')->with($data);
+    }
+
+    public function show()
+    {
+        return  DataTables::of(SatuanModel::query())
+            ->addColumn('action', 'data.satuan.action')
+            ->make(true);
     }
 
     public function create()

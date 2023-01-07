@@ -27,6 +27,11 @@
          <div class="card">
              <div class="card-header">
                  <h3 class="card-title">DATA {{ $title }}</h3>
+                 <div class="card">
+                     <div class="card-body">
+                         <p class="card-text">{{ $sub_title }}</p>
+                     </div>
+                 </div>
              </div>
              <div class="card-body">
                  <div class="table-responsive">
@@ -192,20 +197,14 @@
                          alert(xhr.status + '\n' + throwError);
                      }
                  });
-
              }
          })
-
      }
- </script>
 
-
-
-
-
- <script>
      function refresh() {
-         window.location.href = "{{ url('satuan') }}";
+         window.location.reload();
      }
  </script>
+
+
  @endsection

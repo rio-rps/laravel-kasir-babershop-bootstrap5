@@ -2,7 +2,6 @@
 
 
 @section('isi')
-
 <link rel="stylesheet" href="{{ asset('/') }}plugins/sweetalert2/sweetalert2.min.css">
 <script src="{{ asset('/') }}plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
@@ -31,15 +30,35 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="myTable" class="border-top-0  table table-bordered text-nowrap border-bottom">
+                    <table id="example2" class="border-top-0  table table-bordered text-nowrap border-bottom">
                         <thead>
                             <tr>
-                                <th width=" 1%">No</th>
+                                <th width="1%">No</th>
                                 <th>Nama Satuan</th>
-                                <th width="15%" align="center">Action</th>
+                                <th width="5%" align="center">Action</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @foreach ($result as $row)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ $row->nm_satuan }}</td>
+                                <td>
+                                    <div class="btn-icon-list btn-list">
+                                        <button type="button" class="btn btn-sm btn-success" onclick="editData('{{$row->id_satuan}}')" title="Edit Data"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="hapusData('{{$row->id_satuan}}')" title="Hapus Data"><i class="fa fa-trash"></i></button>
+
+                                        <!-- <form action="{{url('satuan/destroy')}}" method="post" style="display: inline;" onsubmit="return hapusData()">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                            </form> -->
+
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -47,47 +66,20 @@
     </div>
 </div>
 <div class="viewmodal" style="display:none;"></div>
-<!-- DATA TABLE JS-->
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
-
-        myTable = $('#myTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{url('satuan/show')}}",
-            // "data": null,
-            // "class": "align-top",
-            // "orderable": false,
-            // "searchable": false,
-            columns: [{
-                    // "class": "align-top",
-                    "orderable": false,
-                    "searchable": false,
-                    "data": "no",
-                    "render": function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
-                    data: 'nm_satuan',
-                    name: 'nm_satuan'
-                }, {
-                    data: 'action',
-                    name: 'action',
-                }
-            ]
-        });
-    });
+    document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
 
     function showSidebarRight() {
+        //var ket = "test";
         $.ajax({
             type: "GET",
             url: "{{ url('satuan/create') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            // data: {
+            //     ket: ket,
+            // },
             //dataType: "json",
             success: function(response) {
                 $('.viewmodal').html(response).show();
@@ -151,7 +143,7 @@
                                     'success'
                                 )
                                 .then((result) => {
-                                    myTable.ajax.reload();
+                                    window.location.reload();
                                 })
                         }
                     },
@@ -165,7 +157,7 @@
     }
 
     function refresh() {
-        myTable.ajax.reload();
+        window.location.reload();
     }
 </script>
 @endsection
