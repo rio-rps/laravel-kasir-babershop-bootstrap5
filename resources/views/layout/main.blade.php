@@ -34,11 +34,7 @@
 
 <body class="main-body app sidebar-mini ltr">
 
-    <!-- Loader -->
-    <div id="global-loader">
-        <img src="{{ asset('/') }}img/loader.svg" class="loader-img" alt="Loader">
-    </div>
-    <!-- /Loader -->
+
 
     <!-- Page -->
     <div class="page custom-index">
@@ -111,5 +107,30 @@
     <!--Internal  Datatable js -->
     <script src="{{asset('/')}}js/table-data.js"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add(localStorage.getItem('sidebar-status'));
+        //cek()
+        $('.open-toggle').on('click', function() {
+            localStorage.setItem('sidebar-status', 'sidenav-toggled');
+            //console.log('tutup');
+            //cek();
+        });
+
+        $('.close-toggle').on('click', function() {
+            localStorage.removeItem('sidebar-status');
+
+            //console.log('buka');
+            //cek();
+
+        });
+
+        // function cek() {
+        //     console.log(localStorage.getItem('sidebar-status'));
+        // }
+
+
+    });
+</script>
 
 </html>

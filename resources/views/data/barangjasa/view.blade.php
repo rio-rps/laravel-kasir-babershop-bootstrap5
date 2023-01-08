@@ -94,7 +94,9 @@
  </div>
  <div class="viewmodal" style="display:none;"></div>
  <script>
-     document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
+     document.addEventListener('DOMContentLoaded', function() {
+         document.getElementById('button-show-sidebar-right').addEventListener('click', showSidebarRight);
+     });
 
      function showSidebarRight() {
          var id_kategori = <?= $id_kategori; ?>;
